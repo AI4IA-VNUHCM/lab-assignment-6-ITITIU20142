@@ -14,8 +14,20 @@ Ex:
 #include <string.h>
 
 void Ex4(char *str){
-	//Your codes here
-	
+	 int b= 0;
+    int e= 0;
+    while(str[e]!='\0') ++e;
+    e--;
+    while(str[b]== ' ') b++;
+    while(str[e]== ' ') e--;
+    char *temp;
+    int len= e-b+2;
+    temp= (char*)malloc(len);
+    memset(temp, 0, sizeof(temp));
+    for(int i= b; i<= e; i++)
+        temp[i-b]= str[i];
+    temp[len-1]= '\0';
+    printf("%s", temp);
 }
 
 int main(int argc, char *argv[]) {
