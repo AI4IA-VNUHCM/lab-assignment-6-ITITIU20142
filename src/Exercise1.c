@@ -11,80 +11,48 @@
 #include <math.h>
 #include <string.h>
 
+char *parseB_Number(int number) {
+  char *nums[] = {"one",   "two",   "three", "four", "five",   "six",
+                  "seven", "eight", "nine",  "ten",  "eleven", "twelve"};
+  return nums[number - 1];
+}
+char *parseE_Number(int number) {
+  char *nums[] = {" ",   "twen",  "thir", "four", "fif",
+                  "six", "seven", "eight", "nine"};
+  return nums[number - 1];
+}
 void Ex1(int n){
 	//Your codes here
-	int count = 1;
-	while (n>=10){
-		n = n/10;
-		count++;
-	}
-	int len = count ;
-	printf("%d ", len);
-	char * ones[] = {"zero", "one", "two","three", "four",
-					"five", "six", "seven", "eight", "nine"};
-	char * tens[] = {"", "ten", "eleven", "twelve", "thỉteen",
-					 "fourteen", "fifteen", "sixteen", "seventeen",
-					 "eighteen", "nineteen"};
-	char * tensmul[] = {"", "", "twenty", "thirty", "forty",
-						"fifty", "sixty", "seventy", "eighty",
-						"ninety"};
+	int num = n%10, tens = (n/10)%10, 
+	hunds = (n/100)%10, thous = (n/1000)%10;
 
-	if (len == 0){
-		printf("no number input!!!");
+	if (n<0){
+		printf("invalid number input!!!");
 	}
-	if(len > 4){
+	if(n > 9999){
 		printf("number input maximum length is 4-digits!!!");
 	}
-	if(len == 1){ 
-		printf("%s \n", ones[n]);
+	if (thous != 0){
+		printf("%s thousand ", parseB_Number(thous));
 	}
-	if(len == 2){
-		if(n == 10){printf("ten");}
-		else if (n<=19){
-			printf("%s ", tens[n-9]);
-		}
-		else if(n%10 == 0 && n>=20){
-			printf("%s ", tensmul[(n/10)-1]);
-		}
-		else if (n > 20 && n%10 != 0){
-			int u = n%10;
-			printf("%s %s ", tensmul[(n/10) -1], ones[u]);
-		}
-	}
-	if(len == 3){
-		int h = n%1000;
-		printf("%s hundred ", ones[h/100]);
-		int d = h%100;
-		if (d >= 10 && d <= 19){
-			printf("and %s",tens[(d)-9]);
-		}
-		if (d <= 9 && d != 0){
-			printf("and %s", ones[d]);
-		}
-		if (d >= 20){
-			printf("%s ", tensmul[(d)/10]);
-			printf("%s ", ones[d%10]);
-		}
-		if (d == 0) {printf(" ");}
-	}
-	if(len == 4){
-		int t = n/1000;
-		printf("%s thousand ", ones[t]);
-		int h = n%1000;
-		printf("%s hundred ", ones[h/100]);
-		int d = h%100;
-		if (d >= 10 && d <= 19){
-			printf("and %s",tens[(d)-9]);
-		}
-		if (d <= 9 && d != 0){
-			printf("and %s", ones[d]);
-		}
-		if (d >= 20){
-			printf("%s ", tensmul[(d)/10]);
-			printf("%s ", ones[d%10]);
-		}
-		if (d == 0) {printf(" ");}
-	}
+	if (hunds != 0) {
+    printf("%s hundred ", parseB_Number(hunds));
+  }
+
+  if (tens == 1) {
+    if (num > 2) {
+      printf("%steen ", parseE_Number(num));
+    } else
+      printf("%s", parseB_Number(tens * 10 + num));
+  } else if (tens == 2) {
+    printf("%sty ", parseE_Number(tens));
+  } else if (tens != 0) {
+    printf("%sty ", parseE_Number(tens));
+  }
+
+  if (num != 0 && tens != 1) {
+    printf("%s ", parseB_Number(num));
+  }
 }
 
 int main(int argc, char *argv[]) {

@@ -15,34 +15,34 @@ Ex:
 
 void Ex3(char *str){
 	//Your codes here
-	int len = strlen(str);
-	int start_i = 0, end_i = 0;
-	int min_len=len, min_index=0, max_len=0, max_index=0;
-	while (end_i<=len){
-		if(end_i<len && str[end_i] != '\0')
-		end_i++;
-		else{
-			int cur_len = end_i-start_i;
-			if (cur_len<min_len){
-				min_len=cur_len;
-				min_index=start_i;
+	char *p = strtok(str, " ");
+ 	int n = 0;
+  	char *w[100];
+  	while (p != NULL) {
+    	w[n] = p;
+    	printf("%s\n", w[n]);
+    	p = strtok(NULL, " ");
+    	n++;
+  	}
+	int longest_w = strlen(w[0]);
+  	int longest_i = 0;
+		for (int i = 0; i < n; i++){
+			if (strlen(w[i]) > longest_w){
+			longest_w = strlen(w[i]);
+			longest_i = i;
 			}
-			if (cur_len>max_len){
-				max_len=cur_len;
-				max_index=start_i;
-			}
-			end_i++;
-			start_i = end_i;
 		}
-	}
-	char minstr[min_len];
-	memcpy( minstr, &str[min_index], min_len);
-	char maxstr[max_len];
-	memcpy( maxstr, &str[max_index], max_len);
-	printf("Shortest word: %s\n", minstr);
-	printf("Longest word: %s", maxstr);
+	int shortest_w = strlen(w[0]);
+  	int shortest_i = 0;
+  		for (int i = 0; i < n; i++){
+			if (strlen(w[i]) < shortest_w){
+				shortest_w = strlen(w[i]);
+				shortest_i = i;
+			}
+		}
+	printf("Shortest word: %s\n", w[shortest_i]);
+	printf("Longest word: %s\n", w[longest_i]);
 }
-
 int main(int argc, char *argv[]) {
 	//testing variable, applying it to your algorithm for auto-evaluating
 	char *testcase = argv[1];
